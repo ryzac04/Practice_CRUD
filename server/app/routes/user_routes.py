@@ -1,11 +1,16 @@
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from app.models import User, db
-from app.schemas.user_schema import user_schema, users_schema
+
+from ..models import User
+from ..extensions import db 
+from ..schemas import UserSchema
+
 from app.exceptions import InvalidUsage
 
 user_bp = Blueprint("user_bp", __name__, url_prefix="/api/users")
 
+# Instantiate schemas.
+user_schema = UserSchema()
 
 # Get a specific user's profile
 @user_bp.route("/<int:id>", methods=["GET"])
@@ -28,7 +33,7 @@ def get_user(id):
 def get_users():
     try:
         users = User.query.all()
-        return jsonify(users_schema.dump(users)), 200
+        return jsonify(user_schema.dump(users)), 200
     except Exception as err:
         current_app.logger.error(f"Error retrieving users: {err}")
         raise InvalidUsage("Could not retrieve users", 500)
