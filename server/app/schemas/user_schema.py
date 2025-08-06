@@ -31,8 +31,8 @@ class UserLoginSchema(Schema):
     class Meta:
         unknown = EXCLUDE
     
-    username = fields.Str(required=True, validate=validate.Length(min=3, max=80))
-    email = fields.Email(required=True, validate=validate.Length(max=120))
+    username = fields.Str(required=False, validate=validate.Length(min=3, max=80))
+    email = fields.Email(required=False, validate=validate.Length(max=120))
     password = fields.Str(
         load_only=True,
         required=True,
@@ -44,3 +44,12 @@ class UserLoginSchema(Schema):
     def require_email_or_username(self, data, **kwargs): # **kwargs is commonly used to pass a variable number of named arguments into a function (that the function may not explicitly define) so the function doesn't break if Marshmallow includes any extra arguments. 
         if not data.get("username") and not data.get("email"):
             raise ValidationError("Either 'email' or 'username' must be provided.")
+
+# Schema for updating user information. 
+class UserUpdateSchema(Schema):
+    class Meta:
+        unknown = EXCLUDE
+
+    username = fields.Str()
+    email = fields.Email()
+    password = fields.Str(load_only=True)
