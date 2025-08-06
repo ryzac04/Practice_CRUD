@@ -17,7 +17,7 @@ class Config:
     # Turn off event system to save resources.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    JWT_KEY = os.getenv("JWT_SECRET_KEY", "fallback-jwt-key")
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "fallback-jwt-key")
 
     # Enables token revocation in Flask-JWT-Extended.
     JWT_BLACKLIST_ENABLED = True
