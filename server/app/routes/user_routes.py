@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from ..models import User
-from ..extensions import db 
+from ..extensions import db, bcrypt
 from ..schemas import UserSchema
 
 from app.exceptions import InvalidUsage
@@ -11,12 +11,14 @@ user_bp = Blueprint("user_bp", __name__, url_prefix="/api/users")
 
 # Instantiate schemas.
 user_schema = UserSchema()
+user_list_schema = UserSchema(many=True)
+user_update_schema = UserSchema()
 
 # Get a specific user's profile
 @user_bp.route("/<int:id>", methods=["GET"])
 @jwt_required()
 def get_user(id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity()) 
     if current_user_id != id:
         raise InvalidUsage("Unauthorized access", 403)
 
@@ -33,7 +35,7 @@ def get_user(id):
 def get_users():
     try:
         users = User.query.all()
-        return jsonify(user_schema.dump(users)), 200
+        return jsonify(user_list_schema.dump(users)), 200
     except Exception as err:
         current_app.logger.error(f"Error retrieving users: {err}")
         raise InvalidUsage("Could not retrieve users", 500)
@@ -43,7 +45,7 @@ def get_users():
 @user_bp.route("/<int:id>", methods=["PATCH"])
 @jwt_required()
 def update_user(id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     if current_user_id != id:
         raise InvalidUsage("Unauthorized update attempt", 403)
 
@@ -52,13 +54,17 @@ def update_user(id):
         raise InvalidUsage("User not found", 404)
 
     try:
-        data = user_schema.load(request.json, partial=True)
+        data = user_update_schema.load(request.json, partial=True)
 
         for field, value in data.items():
-            setattr(user, field, value)
+            if field == "password":
+                hashed = bcrypt.generate_password_hash(value).decode("utf-8")
+                setattr(user, field, hashed)
+            else:
+                setattr(user, field, value)
 
         db.session.commit()
-        return jsonify(user_schema.dump(user)), 200
+        return jsonify(user_update_schema.dump(user)), 200
 
     except Exception as err:
         db.session.rollback()
@@ -70,7 +76,7 @@ def update_user(id):
 @user_bp.route("/<int:id>", methods=["DELETE"])
 @jwt_required()
 def delete_user(id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     if current_user_id != id:
         raise InvalidUsage("Unauthorized delete attempt", 403)
 
