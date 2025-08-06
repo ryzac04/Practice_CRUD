@@ -83,7 +83,7 @@ def login():
         raise InvalidUsage("Invalid credentials.", status_code=401)
     
     # Create JWT and send back. 
-    access_token = create_access_token(identity=user.id, expires_delta=timedelta(hours=1))
+    access_token = create_access_token(identity=str(user.id), expires_delta=timedelta(hours=1))
     return jsonify(access_token=access_token), 200 
 
 @auth_bp.route('/logout', methods=["POST"])
