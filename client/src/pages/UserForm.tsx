@@ -1,7 +1,5 @@
-function UserForm() {
+export default function UserForm() {
   return (
     <div>UserForm</div>
   )
 }
-
-export default UserForm
