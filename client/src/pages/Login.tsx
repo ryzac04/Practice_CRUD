@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import type { ApiErrorPayload } from "../types/user";
-import { CgPassword } from "react-icons/cg";
 
 export default function Login() {
   const { login } = useAuth();
@@ -39,7 +38,7 @@ export default function Login() {
   };
 
   return (
-    <form onSubmit={onSubmit} style={{maxWidth: 360, display: "grid", gap: 12}}>
+    <form onSubmit={onSubmit} style={{ maxWidth: 360, display: "grid", gap: 12 }}>
       <h2>Login</h2>
 
       <label>
@@ -67,4 +66,4 @@ export default function Login() {
       <button disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
     </form>
   )
-}
+};
