@@ -52,7 +52,7 @@ export default function Register() {
 
       <label>
         Password
-        <input name="password" value={form.password} onChange={onChange} required />
+        <input name="password" type="password" value={form.password} onChange={onChange} required />
       </label>
 
       {serverError && <div style={{ color: "crimson" }}>{serverError}</div>}
