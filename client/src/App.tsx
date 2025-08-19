@@ -1,13 +1,19 @@
 import { Route, Routes } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import UsersList from "./pages/UsersList";
-import UserEdit from "./pages/UserEdit";
+import EditUser from "./pages/EditUser";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
+  const { authLoading } = useAuth(); 
+
+  if (authLoading) {
+    return <div>Loading authentication...</div>
+  }
   return (
     <>
       <NavBar />
@@ -27,10 +33,10 @@ export default function App() {
           />
 
           <Route
-            path="/users/:id/edit"
+            path="/users/profile/:id"
             element={
               <ProtectedRoute>
-                <UserEdit />
+                <EditUser />
               </ProtectedRoute>
             }
           />
