@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function NavBar() {
-    const { isAuthed, logout } = useAuth();
+    const { isAuthed, logout, currentUserId } = useAuth();
     const nav = useNavigate();
 
     return (
@@ -15,6 +15,8 @@ export default function NavBar() {
                     <Link to="/login">Login</Link>
                 </>
             ) : (
+                    <>
+                        {currentUserId && <Link to={`/users/profile/${currentUserId}`}>Edit Page</Link>}
                 <button
                     onClick={() => {
                         logout();
@@ -22,7 +24,9 @@ export default function NavBar() {
                     }}
                 >Logout
                 </button>
-            )}
+                    </>
+                )
+            }
         </nav>
     )
 };
