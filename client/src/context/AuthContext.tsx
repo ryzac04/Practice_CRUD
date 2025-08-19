@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { loginApi } from "../api/auth";
-import { setAuthToken } from "../api/apiClient";
-import type { LoginBody } from "../types/authContext";
-import type { AuthContextValue } from "../types/authContext";
 import { jwtDecode } from "jwt-decode";
+import type { AuthContextValue, LoginBody } from "../types/authContext";
+import { setAuthToken } from "../api/apiClient";
+import { loginApi } from "../api/auth";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined); 
 

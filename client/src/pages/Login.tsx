@@ -39,31 +39,33 @@ export default function Login() {
 
   return (
     <form onSubmit={onSubmit} style={{ maxWidth: 360, display: "grid", gap: 12 }}>
-      <h2>Login</h2>
+      <h2 className="text-white text-2xl">Login</h2>
 
-      <label>
-        Email or Username
+      <label className="text-white">
+        <span className="mr-2">Email or Username:</span>
         <input
           name="emailOrUsername"
           value={form.emailOrUsername}
           onChange={onChange}
           required
+          className="border border-white text-white"
         />
       </label>
 
-      <label>
-        Password
+      <label className="text-white">
+        <span className="mr-2">Password:</span>
         <input
           name="password"
           type="password"
           value={form.password}
           onChange={onChange}
           required
+          className="border border-white text-white"
         />
       </label>
 
       {serverError && <div style={{ color: "crimson" }}>{serverError}</div>}
-      <button disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
+      <button disabled={loading} className="border border-white text-white hover:cursor-pointer">{loading ? "Logging in..." : "Login"}</button>
     </form>
   )
 };

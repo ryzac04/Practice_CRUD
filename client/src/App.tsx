@@ -8,6 +8,8 @@ import UsersList from "./pages/UsersList";
 import EditUser from "./pages/EditUser";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import "./index.css"; 
+
 export default function App() {
   const { authLoading } = useAuth(); 
 
@@ -17,7 +19,7 @@ export default function App() {
   return (
     <>
       <NavBar />
-      <div style={{ padding: 16 }}>
+      <div style={{ padding: 16 }} >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />

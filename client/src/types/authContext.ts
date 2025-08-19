@@ -1,4 +1,8 @@
-export type LoginBody = { email?: string; username?: string; password: string };
+export interface LoginBody {
+    email?: string;
+    username?: string;
+    password: string
+};
 
 export interface AuthContextValue {
     token: string | null;

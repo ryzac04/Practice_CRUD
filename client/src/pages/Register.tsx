@@ -38,26 +38,42 @@ export default function Register() {
 
   return (
     <form onSubmit={onSubmit} style={{ maxWidth: 360, display: "grid", gap: 12 }}>
-      <h2>Register</h2>
+      <h2 className="text-white text-2xl">Register</h2>
 
-      <label>
-        Username
-        <input name="username" value={form.username} onChange={onChange} required minLength={3} />
+      <label className="text-white">
+        <span className="mr-2">Username:</span>
+        <input
+          name="username"
+          value={form.username}
+          onChange={onChange}
+          required minLength={3}
+          className="border border-white text-white" />
       </label>
 
-      <label>
-        Email
-        <input name="email" value={form.email} onChange={onChange} required />
+      <label className="text-white">
+        <span className="mr-2">Email:</span>
+        <input
+          name="email"
+          value={form.email}
+          onChange={onChange}
+          required className="border border-white text-white" />
       </label>
 
-      <label>
-        Password
-        <input name="password" type="password" value={form.password} onChange={onChange} required />
+      <label className="text-white">
+        <span className="mr-2">Password:</span>
+        <input
+          name="password"
+          type="password"
+          value={form.password}
+          onChange={onChange}
+          required
+          className="border border-white text-white"
+        />
       </label>
 
       {serverError && <div style={{ color: "crimson" }}>{serverError}</div>}
 
-      <button disabled={loading}>{loading ? "Creating.." : "Create Account"}</button>
+      <button disabled={loading} className="text-white border border-white hover:cursor-pointer">{loading ? "Creating.." : "Create Account"}</button>
     </form>
   )
 };

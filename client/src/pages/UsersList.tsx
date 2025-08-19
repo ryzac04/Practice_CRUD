@@ -22,18 +22,18 @@ export default function UsersList() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="text-white">Loading...</div>;
   if (errMsg) return <div style={{ color: "crimson" }}>{errMsg}</div>;
 
   return (
     <div>
-      <h2>Users</h2>
+      <h2 className="text-white text-2xl">Users</h2>
       {users.length === 0 ? (
-        <div>No users</div>
+        <div className="text-white">No users</div>
       ) : (
         <ul>
           {users.map((u) => (
-            <li key={u.id}>
+            <li className="text-white" key={u.id}>
               {u.username} — {u.email}
             </li>
           ))}

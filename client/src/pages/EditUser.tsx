@@ -46,7 +46,7 @@ export default function EditUser() {
       if (res.status === 200) {
         // clear token since user deleted themselves
         localStorage.removeItem("token");
-        nav("/users"); // or maybe homepage
+        nav("/home");
       }
     } catch (err) {
       console.error("Error deleting user:", err);
@@ -55,21 +55,23 @@ export default function EditUser() {
 
   return (
     <div>
-      <h1>Edit Profile</h1>
+      <h2 className="text-white text-2xl mb-2">Edit Profile</h2>
       <input
         name="username"
         value={formData.username || ""}
         onChange={handleChange}
         placeholder="Username"
+        className="border border-white text-white mr-2"
       />
       <input
         name="email"
         value={formData.email || ""}
         onChange={handleChange}
         placeholder="Email"
+        className="border border-white text-white mr-2"
       />
-      <button onClick={handleUpdate}>Save Changes</button>
-      <button onClick={handleDelete} style={{ color: "red" }}>
+      <button onClick={handleUpdate} className="border border-white text-white hover:cursor-pointer mr-2">Save Changes</button>
+      <button onClick={handleDelete} className="border border-white text-red-500 hover:cursor-pointer mb-2">
         Delete Account
       </button>
     </div>
